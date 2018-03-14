@@ -15,7 +15,7 @@ def completion(jobdir):
     with open(os.path.join(jobdir, 'processed.csv')) as f:
         done = len(f.readlines())
     progress = int(round((done*100.)/todo))
-    return max(100, progress)
+    return min(100, progress)
 
 @app.route('/')
 def index():
@@ -95,7 +95,7 @@ def jobs(login):
     if not os.path.exists(os.path.join(jobdir, 'processed.csv')):
         return render_template('directory.html', name = name,
                                login = login, subdirs = subdirs,
-                               notstarted = True)
+                               notstarted = "")
 
     # Check if the fetching is complete
     try:
@@ -113,7 +113,7 @@ def jobs(login):
     elif progress < 90:
         return render_template('directory.html', name = name,
                                login = login, subdirs = subdirs,
-                               failed = True)
+                               failed = "")
     else:
         return render_template('directory.html', name = name,
                                login = login, subdirs = subdirs,

@@ -5,23 +5,23 @@
             <a href="{{ url_for('index') }}">log out</a>
         </p>
 
-        {% if notstarted %}
+        {% if notstarted is defined %}
             The requested data job has been queued and will start soon. Please
             refresh to check the updated status.
         {% endif %}
 
-        {% if failed %}
+        {% if failed is defined %}
             The requested data job has failed. Please contact the support team
             to find the issue or <a href="{{ url_for('upload', login = login) }}">try again</a>.
             We apologize for the inconvenience.
         {% endif %}
 
-        {% if progress %}
+        {% if progress is defined %}
             The requested data job is <strong>{{ progress }}%</strong> complete!
             Please refresh to check the updated status.
         {% endif %}
 
-        {% if cursubdir %}
+        {% if cursubdir is defined %}
             The requested data job is complete! Please
             <a href = "{{ url_for('files', login = login, subdir = cursubdir) }}">click here</a>
             to download.
