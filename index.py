@@ -1,12 +1,21 @@
 import os
-import csv
 from math import trunc
 from subprocess import Popen
 from time import gmtime, strftime
-from flask import *
+from csv import reader as csvReader
+from flask import send_from_directory as download
+from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
 homedir = os.path.dirname(os.path.abspath(__file__))
+
+def completion(jobdir):
+    with open(os.path.join(jobdir, 'raw.csv')) as f:
+        todo = len(f.readlines())
+    with open(os.path.join(jobdir, 'processed.csv')) as f:
+        done = len(f.readlines())
+    progress = int(round((done*100.)/todo))
+    return max(100, progress)
 
 @app.route('/')
 def index():
@@ -19,11 +28,11 @@ def login():
     
     with open(os.path.join(homedir, 'users.csv')) as f:
         # login,password,name
-        reader = csv.reader(f, delimiter=',')
+        reader = csvReader(f, delimiter=',')
         for i, line in enumerate(reader):
             if (line[0]==login) and (line[1]==password):
                 name = line[2]
-                return redirect(url_for('jobs', login = login, landing = True))
+                return redirect(url_for('jobs', login = login, landing = ""))
 
     return render_template('index.html', error = 1)
 
@@ -59,7 +68,7 @@ def submit():
 def jobs(login):
     with open(os.path.join(homedir, 'users.csv')) as f:
         #login,password,name
-        reader = csv.reader(f, delimiter=',')
+        reader = csvReader(f, delimiter=',')
         for i, line in enumerate(reader):
             if (line[0]==login):
                 name = line[2]
@@ -96,16 +105,8 @@ def jobs(login):
     else:
         running = True
 
-    # Progress
-    with open(os.path.join(jobdir, 'raw.csv')) as f:
-        todo = len(f.readlines())
-    with open(os.path.join(jobdir, 'processed.csv')) as f:
-        done = len(f.readlines())
-    progress = int(trunc((done*100.)/todo))
-    if progress > 100:
-        progress = 100
-
-    if running==True and progress < 90:
+    progress = completion(jobdir)
+    if (running==True) and (progress<90):
         return render_template('directory.html', name = name,
                                login = login, subdirs = subdirs,
                                progress = progress)
@@ -120,8 +121,9 @@ def jobs(login):
 
 @app.route('/files/<login>/<subdir>')
 def files(login, subdir):
-    return send_from_directory(os.path.join(homedir, 'Data', login, subdir),
-                               'processed.csv')
+    return download(os.path.join(homedir, 'Data', login, subdir),
+                    'processed.csv', as_attachment = True,
+                    attachment_filename = '%s_data.csv' % subdir)
 
 if __name__ == '__main__':
    app.run(debug=1)
