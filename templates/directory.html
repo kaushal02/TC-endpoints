@@ -1,23 +1,34 @@
 <html>
     <body>
-        
+
         {% if notstarted %}
             Hi <strong>{{ name }}</strong>! The requested data job has been
-            queued and will start soon.
+            queued and will start soon. Please refresh to check the updated
+            status.
         {% elif failed %}
             Hi <strong>{{ name }}</strong>! The requested data job has failed.
-            Please contact the support team to find the issue or try again. We 
-            apologize for the inconvenience.
-        {% elif done %}
-            <p>Congratulations <strong>{{ name }}!</strong> The requested data
-            job is complete! Please <a href="{{ done }}">click here</a> to download</p>
+            Please contact the support team to find the issue or <a href="{{ url_for('upload', login = login) }}">try again</a>.
+            We apologize for the inconvenience.
         {% elif progress %}
             <p>Congratulations <strong>{{ name }}!</strong> The requested data
-            job is <strong>{{ progress }}%</strong> complete! </p>
+            job is <strong>{{ progress }}%</strong> complete! </p> Please
+            refresh to check the updated status.
+        {% elif cursubdir %}
+            <p>Congratulations <strong>{{ name }}!</strong> The requested data
+            job is complete! Please <a href = "{{ url_for('files', login = login, subdir = cursubdir) }}">click here</a>
+            to download.</p>
         {% endif %}
         
         <p>Here is the list of all the jobs you requested till date:</p>
-        
+        {% for subdir in subdirs %}
+            <li><a href="{{ url_for('files', login = login, subdir = subdir) }}">{{ subdir }}</a></li>
+        {% endfor %}
+
+        {% if not (notstarted or failed or progress) %}
+            <p><a href="{{ url_for('upload', login = login) }}">Make a data request</a></p>
+        {% endif %}
+
+        <p><a href="{{ url_for('index') }}">log out</a></p>
 
     </body>
 </html>
