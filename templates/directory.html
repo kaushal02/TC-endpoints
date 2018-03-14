@@ -10,7 +10,7 @@
             apologize for the inconvenience.
         {% elif done %}
             <p>Congratulations <strong>{{ name }}!</strong> The requested data
-            job is complete! Please <h3>click here</h3> to download</p>
+            job is complete! Please <a href="{{ done }}">click here</a> to download</p>
         {% elif progress %}
             <p>Congratulations <strong>{{ name }}!</strong> The requested data
             job is <strong>{{ progress }}%</strong> complete! </p>

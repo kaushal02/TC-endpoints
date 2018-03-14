@@ -61,31 +61,35 @@ def jobs(login):
 
     # Check if the fetching has started
     if not os.path.exists(os.path.join(jobdir, 'processed.csv')):
-        return render_template('directory.html', notstarted = 1, name = name)
+        return render_template('directory.html', name = name,
+                               notstarted = True)
 
     # Check if the fetching is complete
     try:
         os.kill(int(pid), 0)
     except OSError:
-        running = True
-    else:
         running = False
+    else:
+        running = True
 
     # Progress
     with open(os.path.join(jobdir, 'raw.csv')) as f:
         todo = len(f.readlines())
     with open(os.path.join(jobdir, 'processed.csv')) as f:
         done = len(f.readlines())
-    progress = trunc((done*100)/todo)
+    progress = int(trunc((done*100.)/todo))
     if progress > 100:
         progress = 100
 
     if running==True:
-        return render_template('directory.html', progress = progress, name = name)
+        return render_template('directory.html', name = name,
+                               progress = progress)
     elif progress < 100:
-        return render_template('directory.html', failed = 1, name = name)
+        return render_template('directory.html', name = name,
+                               failed = True)
     else:
-        return render_template('directory.html', done = 1, name = name)
+        return render_template('directory.html', name = name,
+                               done = os.path.join(jobdir, 'processed.csv'))
     
 if __name__ == '__main__':
    app.run(debug=True)
