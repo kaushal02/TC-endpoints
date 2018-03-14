@@ -19,15 +19,18 @@
             to download.</p>
         {% endif %}
         
-        <p>Here is the list of all the jobs you requested till date:</p>
-        {% for subdir in subdirs %}
-            <li><a href="{{ url_for('files', login = login, subdir = subdir) }}">{{ subdir }}</a></li>
-        {% endfor %}
-
+        {% if not subdirs %}
+            <p>Welcome {{ name }}!</p>
+        {% else %}
+            <p>Here is the list of all the jobs you requested till date:</p>
+            {% for subdir in subdirs %}
+                <li><a href="{{ url_for('files', login = login, subdir = subdir) }}">{{ subdir }}</a></li>
+            {% endfor %}
+        {% endif %}
+        
         {% if not (notstarted or failed or progress) %}
             <p><a href="{{ url_for('upload', login = login) }}">Make a data request</a></p>
         {% endif %}
-
         <p><a href="{{ url_for('index') }}">log out</a></p>
 
     </body>

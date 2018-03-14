@@ -68,7 +68,11 @@ def jobs(login):
         return redirect(url_for('index'))
 
     logindir = os.path.join(homedir, 'Data', login)
-    subdirs = [folder for folder in os.listdir(logindir) if
+    if os.path.isdir(logindir):
+        folders = os.listdir(logindir)
+    else:
+        folders = []
+    subdirs = [folder for folder in folders if
                os.path.isdir(os.path.join(logindir, folder))]
     if 'landing' in request.args:
         return render_template('directory.html', name = name,
