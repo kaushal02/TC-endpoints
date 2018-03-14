@@ -1,0 +1,28 @@
+<html>
+    <body>
+        <p>
+            Hi <strong>{{ name }}!</strong> Please upload a csv file:
+        </p>
+
+        <p>
+            Please ensure the following conditions are met:
+        </p>
+        
+        <ul>
+            <li>First column contains the phone number of users</li>
+            <li>Second column contains the email addresses of the users</li>
+        </ul>
+
+        <p>
+            <strong>Note:</strong> We ignore any other data, if provided.
+        </p>
+
+
+        <form action = "submit" method = "POST" enctype = "multipart/form-data">
+            <input type = "file" name = "file" />
+            <input type = "hidden" name = "login" value = "{{ login }}" />
+            <input type = "submit" />
+        </form>
+
+    </body>
+</html>
