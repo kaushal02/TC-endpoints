@@ -27,9 +27,9 @@ if __name__ == '__main__':
             
             # Calling phone-api
             phone = line[0]
-            phoneapi = GET(('https://truecheckr.com/api/phone-api?apiKey='
-                            'BC9c7ZVWp6dTdMa4HCzrItFP4r7rDprLGdsWHWL6zuw'
-                            '&phone_num=91%s' % phone)).json()['status']
+            pKey = 'aEUWnEPie64GQbEDa7rjs1fbMlm1dTnwLSt0SIqaguQ'
+            phoneapi = GET(('https://truecheckr.com/api/phone-api?apiKey=%s&'
+                            'phone_num=91%s' % (pKey, phone))).json()['status']
             if ('code' in phoneapi) and (phoneapi['code'] == 0):
                 # successful
                 try:
@@ -66,9 +66,10 @@ if __name__ == '__main__':
 
             # Calling email-api
             email = line[1]
+            eKey = 'Ie5JtImyHR9ORznuJLCocVP5ryURpz0Qv8gt44fTf1Q'
             emailapi = GET(('https://www.truecheckr.com/api/searchemail-api?'
-                            'email=%s&apiKey=Ie5JtImyHR9ORznuJLCocVP5ryURpz0Q'
-                            'v8gt44fTf1Q' % email)).json()['status']
+                            'email=%s&apiKey=%s' % (eKey, email)))
+            emailapi = emailapi.json()['status']
             if ('code' in emailapi) and (emailapi['code'] == 0):
                 # successful
                 try:
