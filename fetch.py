@@ -68,7 +68,7 @@ if __name__ == '__main__':
             email = line[1]
             eKey = 'Ie5JtImyHR9ORznuJLCocVP5ryURpz0Qv8gt44fTf1Q'
             emailapi = GET(('https://www.truecheckr.com/api/searchemail-api?'
-                            'email=%s&apiKey=%s' % (eKey, email)))
+                            'email=%s&apiKey=%s' % (email, eKey)))
             emailapi = emailapi.json()['status']
             if ('code' in emailapi) and (emailapi['code'] == 0):
                 # successful
@@ -115,4 +115,4 @@ if __name__ == '__main__':
             #     'CYUduQUw2hKkPTotMEDrgqRAqU2j8Svz'}).json()['status']
 
             writer.writerow(currow)
-
+            fout.flush()

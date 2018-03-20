@@ -2,11 +2,13 @@ import os
 from math import trunc
 from subprocess import Popen
 from time import gmtime, strftime
+from flask_pymongo import PyMongo
 from csv import reader as csvReader
 from flask import send_from_directory as download
 from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
+mongo = PyMongo(app)
 homedir = os.path.dirname(os.path.abspath(__file__))
 
 def completion(jobdir):

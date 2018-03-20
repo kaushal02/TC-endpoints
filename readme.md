@@ -2,7 +2,7 @@
 
 Here is an overview of steps taking place:
 
-#### main.py
+#### index.py
 
 - Gives the user a unique `TaskId`
 - Creates a separate folder named `TaskId` in `Data/`
@@ -17,16 +17,15 @@ Here is an overview of steps taking place:
 fetched from several API calls
 - Calls `python send.py TaskId` and exits
 
-#### send.py
-
-- Emails the user with `processed.csv` and exits
-
 #### INSTALLATION
 
 https://www.datasciencebytes.com/bytes/2015/02/24/running-a-flask-app-on-aws-ec2/
 
-https://www.googleapis.com/customsearch/v1?q=software+engineer+goldman+sachs+new+york&cx=017553353235391622345%3Arweq6qwp_um&key=AIzaSyAbWlmDLuv9TIXVxF6ucu0NE8hf0xTxBpw
-
 ##### PIP Packages
 
-pytz
+Flask-PyMongo
+
+
+#### TO-DO
+
+https://www.googleapis.com/customsearch/v1?q=software+engineer+goldman+sachs+new+york&cx=017553353235391622345%3Arweq6qwp_um&key=AIzaSyAbWlmDLuv9TIXVxF6ucu0NE8hf0xTxBpw
