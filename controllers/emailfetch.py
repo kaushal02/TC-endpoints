@@ -30,7 +30,7 @@ def collect(val):
         pass
     edata = Email(pk=val)
     # Calling email-api
-    Key = 'Ie5JtImyHR9ORznuJLCocVP5ryURpz0Qv8gt44fTf1Q'
+    Key = ''
     data = GET(('https://www.truecheckr.com/api/searchemail-api?'
                 'email=%s&apiKey=%s' % (val, Key))).json()['status']
     if ('code' in data) and (data['code'] == 0):
