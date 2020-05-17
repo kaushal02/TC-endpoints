@@ -22,7 +22,7 @@ return send_from_directory(os.path.join(homedir, 'Data', login, subdir),
 # Calling other email-api
 email2api = requests.get('https://api.fullcontact.com/v2/' + 
     'person.json?email=' + email, headers={'X-FullContact-APIKey':
-    'CYUduQUw2hKkPTotMEDrgqRAqU2j8Svz'}).json()['status']
+    ''}).json()['status']
 
 # writing gathered data to a file
 with open(file_data_processed, 'w') as outfile:
