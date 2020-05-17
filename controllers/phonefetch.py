@@ -11,7 +11,7 @@ def phoneapi(val):
     try:
         prev = Phone.objects.get(pk=val)
         if prev.expired():
-            print('\n\nFUCK!\n\n')
+            print('Error')
             prev.switch_collection('phoneArchived')
             prev.save()
 
@@ -33,7 +33,7 @@ def collect(val):
         print('\n\nDeleted!\n\n')
     pdata = Phone(pk=val)
     # Calling phone-api
-    Key = 'aEUWnEPie64GQbEDa7rjs1fbMlm1dTnwLSt0SIqaguQ'
+    Key = ''
     data = GET(('https://truecheckr.com/api/phone-api?apiKey=%s&'
                 'phone_num=91%s' % (Key, val))).json()['status']
     if ('code' in data) and (data['code'] == 0):
